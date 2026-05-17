@@ -1,7 +1,7 @@
 // Replace this with your actual Gemini API Key
 const GEMINI_API_KEY = 'AIzaSyDIWwaLwZ5Gy7xmfvuovjxjgE3ncJAEk8k';
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+const GEMINI_API_URL = '/api/chat';
 
 const SYSTEM_PROMPTS = {
     assistant: "You are Infinty.ai, a highly advanced, helpful, and concise AI assistant.",
