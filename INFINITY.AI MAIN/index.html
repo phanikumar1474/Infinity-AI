@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinty.ai - Advanced Chatbot</title>
+    <meta name="description"
+        content="A modern, fully responsive AI-powered Chatbot Web Application with real-time interaction, voice features, and markdown support.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Markdown & Syntax Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <!-- DOMPurify for sanitizing marked output -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+    <!-- Landing Page -->
+    <div id="landing-page" class="view active">
+        <!-- Landing page content will be generated here -->
+        <header class="landing-header">
+            <div class="logo">Infinty.ai</div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#demo">Demo</a>
+                <button id="btn-launch-app" class="btn primary-btn">Launch App</button>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Experience the Future of AI Conversations</h1>
+                    <p>An advanced, fully responsive AI chatbot featuring real-time interactions, voice capabilities,
+                        and an elegant SaaS interface.</p>
+                    <button class="btn primary-btn get-started-btn">Get Started Now</button>
+                </div>
+                <div class="hero-graphic">
+                    <div class="glow-orb"></div>
+                    <div class="glass-card mockup">
+                        <!-- Mockup representation -->
+                        <div class="mockup-header"></div>
+                        <div class="mockup-body">
+                            <div class="mock-msg bot"></div>
+                            <div class="mock-msg user"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="features">
+                <h2>Powerful Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i data-lucide="zap"></i>
+                        <h3>Real-time Responses</h3>
+                        <p>Lightning fast AI responses powered by Google's Gemini API.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="mic"></i>
+                        <h3>Voice Interaction</h3>
+                        <p>Speak naturally using Web Speech API for both input and output.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i data-lucide="moon"></i>
+                        <h3>Dark/Light Modes</h3>
+                        <p>Beautiful themes to suit your preference, anytime.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about">
+                <h2>About Infinty.ai</h2>
+                <p>Designed as a showcase of modern web development, Infinty.ai combines sleek glassmorphism design with
+                    cutting-edge AI capabilities.</p>
+            </section>
+
+            <section id="demo" class="demo">
+                <h2>Interactive Demo</h2>
+                <p>Ready to try it out? Launch the application to experience the full power of Infinty.ai.</p>
+                <button class="btn primary-btn launch-demo-btn">Launch Application</button>
+            </section>
+
+            <section id="testimonials" class="testimonials">
+                <h2>What Users Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p>"The UI is incredibly polished. Looks like a premium SaaS product!"</p>
+                        <span>- Developer</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Infinty.ai. Developed for Portfolio.</p>
+        </footer>
+    </div>
+
+    <!-- Application View -->
+    <div id="app-view" class="view hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">Infinty.ai</div>
+                <button id="btn-close-sidebar" class="icon-btn d-mobile"><i data-lucide="x"></i></button>
+            </div>
+
+            <button id="btn-new-chat" class="btn new-chat-btn">
+                <i data-lucide="plus"></i> New Chat
+            </button>
+
+            <div class="search-container">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-chats" placeholder="Search chats...">
+            </div>
+
+            <div class="chat-history" id="chat-history-list">
+                <!-- Chat history items injected here -->
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="btn-theme-toggle" class="sidebar-btn">
+                    <i data-lucide="sun"></i> <span class="theme-text">Light Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <header class="chat-header">
+                <button id="btn-menu" class="icon-btn d-mobile"><i data-lucide="menu"></i></button>
+                <div class="chat-title-area">
+                    <h2 id="current-chat-title">New Conversation</h2>
+                </div>
+                <div class="header-actions">
+                    <select id="ai-personality" class="styled-select">
+                        <option value="assistant">Assistant</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="interviewer">Interviewer</option>
+                        <option value="coding">Coding Expert</option>
+                        <option value="motivator">Motivator</option>
+                    </select>
+                    <button id="btn-export" class="icon-btn" title="Export Chat"><i data-lucide="download"></i></button>
+                    <button id="btn-clear" class="icon-btn" title="Clear Chat"><i data-lucide="trash-2"></i></button>
+                </div>
+            </header>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- Welcome Message / Empty State -->
+                <div class="welcome-state" id="welcome-state">
+                    <div class="welcome-logo"><i data-lucide="sparkles"></i></div>
+                    <h2>How can I help you today?</h2>
+                </div>
+                <!-- Message bubbles injected here -->
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <button id="btn-upload" class="icon-btn" title="Upload File (Demo)"><i
+                            data-lucide="paperclip"></i></button>
+                    <textarea id="message-input" placeholder="Message Infinty.ai..." rows="1"></textarea>
+                    <button id="btn-voice" class="icon-btn" title="Voice Input"><i data-lucide="mic"></i></button>
+                    <button id="btn-send" class="icon-btn send-btn" disabled><i data-lucide="send"></i></button>
+                </div>
+                <div class="typing-indicator hidden" id="typing-indicator">
+                    <span>AI is typing</span>
+                    <span class="dots"><span>.</span><span>.</span><span>.</span></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
