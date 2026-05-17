@@ -1,5 +1,4 @@
 // Replace this with your actual Gemini API Key
-const GEMINI_API_KEY = 'AIzaSyDIWwaLwZ5Gy7xmfvuovjxjgE3ncJAEk8k';
 
 const GEMINI_API_URL = '/api/chat';
 
