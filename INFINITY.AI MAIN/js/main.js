@@ -189,7 +189,7 @@ function setupEventListeners() {
         logoutBtn.addEventListener('click', () => {
             if (confirm('Logout from Infinty.ai?')) {
                 logoutUser();
-                window.location.href = 'index.html';
+                window.location.href = 'login.html';
             }
         });
     }

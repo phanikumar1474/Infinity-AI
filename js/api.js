@@ -11,7 +11,7 @@ const SYSTEM_PROMPTS = {
     motivator: "You are an energetic motivational speaker. Use enthusiastic language to uplift, encourage, and drive the user to achieve their goals."
 };
 
-const STRUCTURED_RESPONSE_GUIDELINES = "Always answer in a clear, structured format using Markdown. Prefer headings (## or ###), bullet lists, numbered steps, and short paragraphs. Include a brief summary or conclusion when useful, and avoid long unstructured text blocks.";
+const STRUCTURED_RESPONSE_GUIDELINES = "Always answer using a clear, consistent Markdown structure. Start with a short summary, then use headings (## or ###), bullet lists, numbered steps, tables, and short section paragraphs. Avoid long unstructured text blocks and keep answers easy to scan.";
 
 export const generateContent = async (messages, personality = 'assistant') => {
     if (!GEMINI_API_KEY) {
@@ -20,24 +20,20 @@ export const generateContent = async (messages, personality = 'assistant') => {
 
     // Prepare messages for Gemini API
     const contents = [];
-
-    // Inject system prompt as first user message followed by model ack, or just prepend to the latest message.
-    // Gemini handles system instructions in its newer API versions, but here is a simple way:
     const personalityPrompt = SYSTEM_PROMPTS[personality] || SYSTEM_PROMPTS.assistant;
     const systemPrompt = `${personalityPrompt}\n\n${STRUCTURED_RESPONSE_GUIDELINES}`;
 
+    contents.push({
+        role: 'system',
+        parts: [{ text: systemPrompt }]
+    });
+
     messages.forEach(msg => {
         contents.push({
-            role: msg.role === 'user' ? 'user' : 'model',
+            role: msg.role === 'user' ? 'user' : 'assistant',
             parts: [{ text: msg.content }]
         });
     });
-
-    // If it's the first message or we want to enforce personality, prepend it to the latest user message
-    if (contents.length > 0 && contents[contents.length - 1].role === 'user') {
-        const lastMsg = contents[contents.length - 1].parts[0].text;
-        contents[contents.length - 1].parts[0].text = `[System: ${systemPrompt}]\n\nUser: ${lastMsg}`;
-    }
 
     try {
         const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
@@ -48,7 +44,8 @@ export const generateContent = async (messages, personality = 'assistant') => {
             body: JSON.stringify({
                 contents: contents,
                 generationConfig: {
-                    temperature: 0.7,
+                    temperature: 0.3,
+                    topP: 0.95,
                     maxOutputTokens: 2048,
                 }
             })
