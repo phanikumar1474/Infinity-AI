@@ -2,6 +2,7 @@ import {
     getTheme, saveTheme, 
     getChats, createNewChat, getChatById, addMessageToChat, deleteChat, updateChat 
 } from './storage.js';
+import { getLoggedInUser, logoutUser } from './auth.js';
 import { generateContent } from './api.js';
 import { UI } from './ui.js';
 import { SpeechService } from './speech.js';
@@ -171,12 +172,27 @@ function setupSpeakerButtons() {
 function setupEventListeners() {
     // View Toggles
     const launchApp = () => {
+        if (!getLoggedInUser()) {
+            window.location.href = 'login.html';
+            return;
+        }
+
         document.getElementById('landing-page').classList.remove('active');
         document.getElementById('app-view').classList.add('active');
     };
     document.getElementById('btn-launch-app').addEventListener('click', launchApp);
     document.querySelector('.get-started-btn').addEventListener('click', launchApp);
     document.querySelector('.launch-demo-btn').addEventListener('click', launchApp);
+
+    const logoutBtn = document.getElementById('btn-logout');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Logout from Infinty.ai?')) {
+                logoutUser();
+                window.location.href = 'login.html';
+            }
+        });
+    }
 
     // Landing nav smooth scroll
     document.querySelectorAll('.landing-header nav a[href^="#"]').forEach(link => {

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinty.ai - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+    <div class="auth-page">
+        <div class="auth-panel glass-panel">
+            <div class="auth-head">
+                <div class="logo">Infinty.ai</div>
+                <p>Sign in to continue to your AI chat workspace.</p>
+            </div>
+
+            <form id="login-form" class="auth-form">
+                <div class="setting-group">
+                    <label for="login-username">Username</label>
+                    <input id="login-username" type="text" placeholder="Your username" required>
+                </div>
+                <div class="setting-group">
+                    <label for="login-password">Password</label>
+                    <input id="login-password" type="password" placeholder="Your password" required>
+                </div>
+                <button type="submit" class="btn primary-btn full-width">Login</button>
+                <div class="auth-footer">New here? <a href="register.html">Create an account</a></div>
+                <div id="login-message" class="auth-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="js/login.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
